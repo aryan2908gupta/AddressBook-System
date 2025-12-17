@@ -1,10 +1,13 @@
-﻿namespace AddressManagementSystem
+﻿using AddressManagementSystem.Services;
+
+namespace AddressManagementSystem
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            AddressBookService service = new AddressBookService();
+            service.AddContact();
         }
     }
 }
