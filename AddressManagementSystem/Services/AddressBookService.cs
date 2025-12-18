@@ -7,6 +7,8 @@ namespace AddressManagementSystem.Services
 {
     internal class AddressBookService : IAddressBookService
     {
+        
+
         private readonly List<Contact> contacts = new List<Contact>();
 
         public void AddContact()
@@ -45,23 +47,34 @@ namespace AddressManagementSystem.Services
 
         public void EditContact()
         {
-            Console.Write("Enter name : ");
-           string name1 = Console.ReadLine();
-            Console.WriteLine();
-            foreach (Contact contact in contacts) {
-                if (contact.FirstName == name1)
+            Console.Write("Enter the Name : ");
+            string name = Console.ReadLine();
+            bool isFound = false;
+            foreach (Contact contact in contacts)
+            {
+                if (contact.FirstName.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
 
-                    Console.WriteLine("Enter the Phone number to be Changed : ");
+
+                    Console.Write("Enter new Phone Number: ");
                     contact.PhoneNumber = Console.ReadLine();
 
+
+                    Console.WriteLine("Contact updated successfully");
+                    isFound = true;
+
                     return;
+
                 }
-                else
-                {
-                    Console.WriteLine($"No user exist with this name : ${name}");
-                }
+
+
+            }
+
+            if (!isFound)
+            {
+                Console.WriteLine("User Doesn't Exists");
             }
         }
     }
-}
+    }
+

@@ -1,4 +1,5 @@
-﻿using AddressManagementSystem.Services;
+﻿using AddressManagementSystem.Entity;
+using AddressManagementSystem.Services;
 
 namespace AddressManagementSystem
 {
@@ -7,9 +8,10 @@ namespace AddressManagementSystem
         static void Main(string[] args)
         {
             AddressBookService service = new AddressBookService();
-            // service.AddContact();
-            
+          
+            //service.AddContact();
             service.EditContact();
+            
         }
     }
 }
