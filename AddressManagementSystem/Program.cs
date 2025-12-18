@@ -9,7 +9,7 @@ namespace AddressManagementSystem
         {
             AddressBookService service = new AddressBookService();
           
-            //service.AddContact();
+            service.AddContact();
             service.EditContact();
             
         }
