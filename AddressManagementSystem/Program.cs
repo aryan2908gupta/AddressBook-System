@@ -7,7 +7,9 @@ namespace AddressManagementSystem
         static void Main(string[] args)
         {
             AddressBookService service = new AddressBookService();
-            service.AddContact();
+            // service.AddContact();
+            
+            service.EditContact();
         }
     }
 }
