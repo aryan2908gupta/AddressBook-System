@@ -13,36 +13,43 @@ namespace AddressManagementSystem.Services
 
         public void AddContact()
         {
-            Contact contact = new Contact();
+            string choice;
+            do
+            {
+                Contact contact = new Contact();
 
-            Console.Write("Enter First Name: ");
-            contact.FirstName = Console.ReadLine();
+                Console.Write("Enter First Name: ");
+                contact.FirstName = Console.ReadLine();
 
-            Console.Write("Enter Last Name: ");
-            contact.LastName = Console.ReadLine();
+                Console.Write("Enter Last Name: ");
+                contact.LastName = Console.ReadLine();
 
-            Console.Write("Enter Address: ");
-            contact.Address = Console.ReadLine();
+                Console.Write("Enter Address: ");
+                contact.Address = Console.ReadLine();
 
-            Console.Write("Enter City: ");
-            contact.City = Console.ReadLine();
+                Console.Write("Enter City: ");
+                contact.City = Console.ReadLine();
 
-            Console.Write("Enter State: ");
-            contact.State = Console.ReadLine();
+                Console.Write("Enter State: ");
+                contact.State = Console.ReadLine();
 
-            Console.Write("Enter Zip Code: ");
-            contact.ZipCode = Console.ReadLine();
+                Console.Write("Enter Zip Code: ");
+                contact.ZipCode = Console.ReadLine();
 
-            Console.Write("Enter Phone Number: ");
-            contact.PhoneNumber = Console.ReadLine();
+                Console.Write("Enter Phone Number: ");
+                contact.PhoneNumber = Console.ReadLine();
 
-            Console.Write("Enter Email: ");
-            contact.Email = Console.ReadLine();
+                Console.Write("Enter Email: ");
+                contact.Email = Console.ReadLine();
 
-            contacts.Add(contact);
+                contacts.Add(contact);
 
-            Console.WriteLine();
-            Console.WriteLine("Contacts Added Successfully");
+                Console.WriteLine();
+                Console.WriteLine("Contacts Added Successfully");
+
+                Console.Write("Do you want to add another contact? (Y/N): ");
+                choice = Console.ReadLine();
+            } while (choice.Equals("Y", StringComparison.OrdinalIgnoreCase));
         }
 
         public void EditContact()
