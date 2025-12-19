@@ -75,6 +75,33 @@ namespace AddressManagementSystem.Services
                 Console.WriteLine("User Doesn't Exists");
             }
         }
+        public void DeleteContact()
+        {
+            Console.Write("Enter First Name to delete: ");
+            string name = Console.ReadLine();
+
+            Contact contactToRemove = null;
+
+            foreach (Contact contact in contacts)
+            {
+                if (contact.FirstName.Equals(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    contactToRemove = contact;
+                    break;
+                }
+            }
+
+            if (contactToRemove != null)
+            {
+                contacts.Remove(contactToRemove);
+                Console.WriteLine("Contact deleted successfully");
+            }
+            else
+            {
+                Console.WriteLine("user does not exist");
+            }
+        }
+
     }
     }
 

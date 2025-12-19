@@ -9,6 +9,8 @@ namespace AddressManagementSystem.Services
     {   
         void AddContact();
         void EditContact();
+
+        void DeleteContact();
       
     }
 }

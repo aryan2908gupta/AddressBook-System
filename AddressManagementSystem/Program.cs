@@ -10,7 +10,10 @@ namespace AddressManagementSystem
             AddressBookService service = new AddressBookService();
           
             service.AddContact();
+            Console.WriteLine("Now running edit");
             service.EditContact();
+            Console.WriteLine("Now running delete");
+            service.DeleteContact();
             
         }
     }
