@@ -7,105 +7,106 @@ namespace AddressManagementSystem.Services
 {
     internal class AddressBookService : IAddressBookService
     {
-        
 
-        private readonly List<Contact> contacts = new List<Contact>();
+   private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
+
+        //private readonly List<Contact> contacts = new List<Contact>();
 
         public void AddContact()
         {
             string choice;
             do
             {
-                Contact contact = new Contact();
+               
 
                 Console.Write("Enter First Name: ");
-                contact.FirstName = Console.ReadLine();
+                string firstName = Console.ReadLine();
 
                 Console.Write("Enter Last Name: ");
-                contact.LastName = Console.ReadLine();
+                string lastName = Console.ReadLine();
 
-                Console.Write("Enter Address: ");
-                contact.Address = Console.ReadLine();
+                string key = firstName + " " +lastName;
 
-                Console.Write("Enter City: ");
-                contact.City = Console.ReadLine();
+                if (contacts.ContainsKey(key))
+                {
+                    Console.WriteLine($"User Already exists with this {key} name ");
+                }
+                else {
+                    Contact contact = new Contact();
+                    
+                    contact.FirstName = firstName;
+                    contact.LastName = lastName;
 
-                Console.Write("Enter State: ");
-                contact.State = Console.ReadLine();
+                    Console.Write("Enter Address: ");
+                    contact.Address = Console.ReadLine();
 
-                Console.Write("Enter Zip Code: ");
-                contact.ZipCode = Console.ReadLine();
+                    Console.Write("Enter City: ");
+                    contact.City = Console.ReadLine();
 
-                Console.Write("Enter Phone Number: ");
-                contact.PhoneNumber = Console.ReadLine();
+                    Console.Write("Enter State: ");
+                    contact.State = Console.ReadLine();
 
-                Console.Write("Enter Email: ");
-                contact.Email = Console.ReadLine();
+                    Console.Write("Enter Zip Code: ");
+                    contact.ZipCode = Console.ReadLine();
 
-                contacts.Add(contact);
+                    Console.Write("Enter Phone Number: ");
+                    contact.PhoneNumber = Console.ReadLine();
 
-                Console.WriteLine();
-                Console.WriteLine("Contacts Added Successfully");
+                    Console.Write("Enter Email: ");
+                    contact.Email = Console.ReadLine();
 
+                    contacts.Add(key,contact);
+
+                    Console.WriteLine();
+                    Console.WriteLine("Contacts Added Successfully");
+
+                }
                 Console.Write("Do you want to add another contact? (Y/N): ");
                 choice = Console.ReadLine();
+
             } while (choice.Equals("Y", StringComparison.OrdinalIgnoreCase));
         }
 
         public void EditContact()
         {
-            Console.Write("Enter the Name : ");
-            string name = Console.ReadLine();
-            bool isFound = false;
-            foreach (Contact contact in contacts)
-            {
-                if (contact.FirstName.Equals(name, StringComparison.OrdinalIgnoreCase))
-                {
+            Console.Write("Enter Your First Name : ");
+            string firstname = Console.ReadLine();
 
+            Console.Write("Enter Your Last Name : ");
+            string lastName = Console.ReadLine();
 
-                    Console.Write("Enter new Phone Number: ");
-                    contact.PhoneNumber = Console.ReadLine();
+            string key = firstname + " " + lastName;
 
+            if (contacts.ContainsKey(key)) { 
+            
+                Contact contact = contacts[key];
+                Console.Write("Enter the new Phone Number : ");
+                contact.PhoneNumber = Console.ReadLine();
 
-                    Console.WriteLine("Contact updated successfully");
-                    isFound = true;
-
-                    return;
-
-                }
-
-
+                Console.WriteLine("Contact Updated Successfully!");
             }
-
-            if (!isFound)
+            else
             {
-                Console.WriteLine("User Doesn't Exists");
+                Console.WriteLine("User Doesn't Exists ");
             }
         }
         public void DeleteContact()
         {
-            Console.Write("Enter First Name to delete: ");
-            string name = Console.ReadLine();
+            Console.Write("Enter Your First Name : ");
+            string firstname = Console.ReadLine();
 
-            Contact contactToRemove = null;
+            Console.Write("Enter Your Last Name : ");
+            string lastName = Console.ReadLine();
 
-            foreach (Contact contact in contacts)
-            {
-                if (contact.FirstName.Equals(name, StringComparison.OrdinalIgnoreCase))
-                {
-                    contactToRemove = contact;
-                    break;
-                }
-            }
+            string key = firstname + " " + lastName;
 
-            if (contactToRemove != null)
-            {
-                contacts.Remove(contactToRemove);
-                Console.WriteLine("Contact deleted successfully");
+            if (contacts.ContainsKey(key)) { 
+            
+                contacts.Remove(key);
             }
             else
             {
-                Console.WriteLine("user does not exist");
+                Console.WriteLine("User Doesnt Exists");
             }
         }
 
