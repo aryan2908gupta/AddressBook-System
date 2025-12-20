@@ -11,6 +11,7 @@ namespace AddressManagementSystem.Services
    private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
 
         //private readonly List<Contact> contacts = new List<Contact>();
+        //UC6 and UC7 DONE IN SAME
 
         public void AddContact()
         {
