@@ -27,7 +27,7 @@ namespace AddressManagementSystem.Services
                 string lastName = Console.ReadLine();
 
                 string key = firstName + " " +lastName;
-
+                
                 if (contacts.ContainsKey(key))
                 {
                     Console.WriteLine($"User Already exists with this {key} name ");
@@ -110,7 +110,12 @@ namespace AddressManagementSystem.Services
                 Console.WriteLine("User Doesnt Exists");
             }
         }
+        public IEnumerable<Contact> GetAllContacts()
+        {
+            return contacts.Values;
+        }
+
 
     }
-    }
+}
 

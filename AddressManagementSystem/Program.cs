@@ -1,49 +1,34 @@
-﻿using AddressManagementSystem.Entity;
+﻿using System;
 using AddressManagementSystem.Services;
 
 namespace AddressManagementSystem
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            AddressBookService service = new AddressBookService();
+            AddressBookSystem system = new AddressBookSystem();
+
+            system.CreateAddressBook("Friends");
+            AddressBookService book = system.GetBook("Friends");
 
             while (true)
             {
-
-                Console.WriteLine("\n--- ADDRESS BOOK ---");
-                Console.WriteLine("1. Add Contact");
-                Console.WriteLine("2. Edit Contact");
-                Console.WriteLine("3. Delete Contact");
-                Console.WriteLine("4. Exit");
-                Console.Write("Choose option: ");
-
+                Console.WriteLine("\n1 Add  2 Edit  3 Delete  4 Search City/State  5 Exit");
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
                 {
-                    case 1:
-                        service.AddContact();
-                        break;
-
-                    case 2:
-                        service.EditContact();
-                        break;
-
-                    case 3:
-                        service.DeleteContact();
-                        break;
-
+                    case 1: book.AddContact(); break;
+                    case 2: book.EditContact(); break;
+                    case 3: book.DeleteContact(); break;
                     case 4:
-                        return;
-
-                    default:
-                        Console.WriteLine("Invalid option");
+                        Console.Write("Enter City or State: ");
+                        system.SearchByCityOrState(Console.ReadLine());
                         break;
+                    case 5: return;
                 }
             }
-            
         }
     }
 }
