@@ -50,7 +50,7 @@ namespace AddressManagementSystem
                         break;
 
                     case 5:
-                        system.CountContactsByCityAndState(); // UC10
+                        system.CountByCityOrState(); // UC10
                         break;
 
                     case 6:
