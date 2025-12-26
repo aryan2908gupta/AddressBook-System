@@ -13,8 +13,14 @@ namespace AddressManagementSystem
             AddressBookService book = system.GetBook("Friends");
 
             while (true)
-            {
-                Console.WriteLine("\n1 Add  2 Edit  3 Delete  4 Search City/State  5 Exit");
+                {
+                Console.WriteLine("\n1. Add");
+                Console.WriteLine("2. Edit");
+                Console.WriteLine("3. Delete");
+                Console.WriteLine("4. Search by City/State");
+                Console.WriteLine("5. Exit");
+                Console.Write("Enter your choice: ");
+
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)

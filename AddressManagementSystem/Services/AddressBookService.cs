@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AddressManagementSystem.Services
 {
-    internal class AddressBookService : IAddressBookService
+    public class AddressBookService : IAddressBookService
     {
 
    private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
@@ -110,10 +110,12 @@ namespace AddressManagementSystem.Services
                 Console.WriteLine("User Doesnt Exists");
             }
         }
+
         public IEnumerable<Contact> GetAllContacts()
         {
             return contacts.Values;
         }
+
 
 
     }

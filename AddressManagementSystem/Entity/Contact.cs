@@ -4,7 +4,7 @@ using AddressManagementSystem.Exceptions;
 
 namespace AddressManagementSystem.Entity
 {
-    internal class Contact
+    public class Contact
     {
         private string firstName;
         private string lastName;

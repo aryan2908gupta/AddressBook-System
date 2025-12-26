@@ -4,7 +4,7 @@ using AddressManagementSystem.Entity;
 
 namespace AddressManagementSystem.Services
 {
-    internal class AddressBookSystem
+    public class AddressBookSystem
     {
         private readonly Dictionary<string, AddressBookService> books =
             new Dictionary<string, AddressBookService>(StringComparer.OrdinalIgnoreCase);
@@ -30,6 +30,8 @@ namespace AddressManagementSystem.Services
         // UC8
         public void SearchByCityOrState(string value)
         {
+            bool found = false;
+
             foreach (var book in books)
             {
                 foreach (Contact c in book.Value.GetAllContacts())
@@ -37,10 +39,19 @@ namespace AddressManagementSystem.Services
                     if (c.City.Equals(value, StringComparison.OrdinalIgnoreCase) ||
                         c.State.Equals(value, StringComparison.OrdinalIgnoreCase))
                     {
-                        Console.WriteLine($"{c.FirstName} {c.LastName} - {c.City}, {c.State}");
+                        Console.WriteLine(
+                            $"{c.FirstName} {c.LastName} | {c.City}, {c.State} | {book.Key}"
+                        );
+                        found = true;
                     }
                 }
             }
+
+            if (!found)
+            {
+                Console.WriteLine("No person found in given city/state.");
+            }
         }
+
     }
 }
