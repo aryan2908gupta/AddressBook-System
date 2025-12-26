@@ -21,7 +21,8 @@ namespace AddressManagementSystem
                 Console.WriteLine("4. Search by City/State (UC8)");
                 Console.WriteLine("5. Count Contacts by City/State (UC10)");
                 Console.WriteLine("6. Sort Contacts by Name (UC11)");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("7. Sort Contacts by City/State/Zip (UC12)");
+                Console.WriteLine("8. Exit");
                 Console.Write("Enter your choice: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int choice))
@@ -58,6 +59,39 @@ namespace AddressManagementSystem
                         break;
 
                     case 7:
+                        Console.WriteLine("\nSort Contacts By:");
+                        Console.WriteLine("1. City");
+                        Console.WriteLine("2. State");
+                        Console.WriteLine("3. Zip");
+                        Console.Write("Enter your choice: ");
+
+                        if (!int.TryParse(Console.ReadLine(), out int sortChoice))
+                        {
+                            Console.WriteLine("Invalid input.");
+                            break;
+                        }
+
+                        switch (sortChoice)
+                        {
+                            case 1:
+                                system.SortContactsByCity();
+                                break;
+
+                            case 2:
+                                system.SortContactsByState();
+                                break;
+
+                            case 3:
+                                system.SortContactsByZip();
+                                break;
+
+                            default:
+                                Console.WriteLine("Invalid sorting option.");
+                                break;
+                        }
+                        break;
+
+                    case 8:
                         Console.WriteLine("Exiting application...");
                         return;
 

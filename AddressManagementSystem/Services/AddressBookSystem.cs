@@ -153,7 +153,39 @@ namespace AddressManagementSystem.Services
                 Console.WriteLine(contact);
         }
 
+        public void SortContactsByCity()
+        {
+            var contacts = books.Values
+                                        .SelectMany(b => b.GetAllContacts())
+                                        .OrderBy(c => c.City);
 
-
+            Console.WriteLine("\nContacts sorted by City:");
+            foreach (var c in contacts)
+                Console.WriteLine(c);
         }
+
+        public void SortContactsByState()
+        {
+            var contacts = books.Values
+                                        .SelectMany(b => b.GetAllContacts())
+                                        .OrderBy(c => c.State);
+
+            Console.WriteLine("\nContacts sorted by State:");
+            foreach (var c in contacts)
+                Console.WriteLine(c);
+        }
+
+        public void SortContactsByZip()
+        {
+            var contacts = books.Values
+                                        .SelectMany(b => b.GetAllContacts())
+                                        .OrderBy(c => c.ZipCode);
+
+            Console.WriteLine("\nContacts sorted by Zip:");
+            foreach (var c in contacts)
+                Console.WriteLine(c);
+        }
+
+
+    }
     }
