@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AddressManagementSystem.Entity;
+using System.Linq;
 
 namespace AddressManagementSystem.Services
 {
@@ -117,6 +118,42 @@ namespace AddressManagementSystem.Services
         }
 
 
+        public void CountByCityOrState()
+        {
+            var allContacts = books.Values
+                                   .SelectMany(b => b.GetAllContacts());
 
+            var cityCount = allContacts
+                            .GroupBy(c => c.City)
+                            .Select(g => new { City = g.Key, Count = g.Count() });
+
+            var stateCount = allContacts
+                             .GroupBy(c => c.State)
+                             .Select(g => new { State = g.Key, Count = g.Count() });
+
+            Console.WriteLine("\nCount by City:");
+            foreach (var c in cityCount)
+                Console.WriteLine($"{c.City} : {c.Count}");
+
+            Console.WriteLine("\nCount by State:");
+            foreach (var s in stateCount)
+                Console.WriteLine($"{s.State} : {s.Count}");
+        }
+
+
+        public void SortContactsByName()
+        {
+            var sortedContacts = books.Values
+                                              .SelectMany(b => b.GetAllContacts())
+                                              .OrderBy(c => c.FirstName)
+                                              .ThenBy(c => c.LastName);
+
+            Console.WriteLine("\nContacts sorted by Name:");
+            foreach (var contact in sortedContacts)
+                Console.WriteLine(contact);
+        }
+
+
+
+        }
     }
-}

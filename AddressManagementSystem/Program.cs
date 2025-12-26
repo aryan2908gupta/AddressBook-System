@@ -20,7 +20,8 @@ namespace AddressManagementSystem
                 Console.WriteLine("3. Delete Contact");
                 Console.WriteLine("4. Search by City/State (UC8)");
                 Console.WriteLine("5. Count Contacts by City/State (UC10)");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("6. Sort Contacts by Name (UC11)");
+                Console.WriteLine("7. Exit");
                 Console.Write("Enter your choice: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int choice))
@@ -49,10 +50,14 @@ namespace AddressManagementSystem
                         break;
 
                     case 5:
-                        system.CountByCityOrState(); // UC10
+                        system.CountContactsByCityAndState(); // UC10
                         break;
 
                     case 6:
+                        system.SortContactsByName(); // UC11
+                        break;
+
+                    case 7:
                         Console.WriteLine("Exiting application...");
                         return;
 
