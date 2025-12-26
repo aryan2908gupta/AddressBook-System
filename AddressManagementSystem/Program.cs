@@ -19,6 +19,9 @@ namespace AddressManagementSystem
                 Console.WriteLine("3. Delete");
                 Console.WriteLine("4. Search by City/State");
                 Console.WriteLine("5. Exit");
+                Console.WriteLine("6. View by City");
+                Console.WriteLine("7. View by State");
+
                 Console.Write("Enter your choice: ");
 
                 int choice = int.Parse(Console.ReadLine());
@@ -33,6 +36,16 @@ namespace AddressManagementSystem
                         system.SearchByCityOrState(Console.ReadLine());
                         break;
                     case 5: return;
+                    case 6:
+                        Console.Write("Enter City: ");
+                        system.ViewPersonsByCity(Console.ReadLine());
+                        break;
+
+                    case 7:
+                        Console.Write("Enter State: ");
+                        system.ViewPersonsByState(Console.ReadLine());
+                        break;
+
                 }
             }
         }
