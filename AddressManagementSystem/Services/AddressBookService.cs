@@ -9,7 +9,7 @@ namespace AddressManagementSystem.Services
     public class AddressBookService : IAddressBookService
     {
 
-        private const string filepath = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\addressbook.txt";
+        private const string filepath = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\AddressManagementSystem\contact.txt";
 
         private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
 
@@ -155,24 +155,25 @@ namespace AddressManagementSystem.Services
             return isChanged;
         }
 
-        public void WriteContactsToFile()
+        public async Task WriteContactsToFile()
         {
             using (StreamWriter writer = new StreamWriter(filepath))
             {
                 foreach (var contact in contacts.Values)
                 {
-                    writer.WriteLine(
-                             $"{contact.FirstName}|{contact.LastName}|{contact.Address}|" +
-                $"{contact.City}|{contact.State}|{contact.ZipCode}|" +
-                $"{contact.PhoneNumber}|{contact.Email}"
-                        );
+                    await writer.WriteLineAsync(
+                        $"{contact.FirstName}|{contact.LastName}|{contact.Address}|" +
+                        $"{contact.City}|{contact.State}|{contact.ZipCode}|" +
+                        $"{contact.PhoneNumber}|{contact.Email}"
+                    );
                 }
             }
-            Console.WriteLine("Contacts saved to AddressBook.txt successfully.");
 
+            Console.WriteLine("Contacts saved to AddressBook.txt successfully.");
         }
 
-        public void ReadContactFromFile()
+
+        public async Task ReadContactFromFile()
         {
             if (!File.Exists(filepath))
             {
@@ -181,7 +182,7 @@ namespace AddressManagementSystem.Services
             }
             contacts.Clear();
 
-            string[] lines = File.ReadAllLines(filepath);
+            string[] lines = await File.ReadAllLinesAsync(filepath);
 
             foreach (string line in lines)
             {
@@ -206,12 +207,13 @@ namespace AddressManagementSystem.Services
             Console.WriteLine("Contacts loaded from AddressBook.txt successfully.");
         }
 
-        private const string csvpathfile = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\contact.csv";
-        public void WriteCsvFile()
+        private const string csvpathfile = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\AddressManagementSystem\contact.csv";
+
+        public async Task WriteCsvFile()
         {
             using (StreamWriter writer = new StreamWriter(csvpathfile))
             {
-                writer.WriteLine("FirstName,LastName,Address,City,State,ZipCode,PhoneNumber,Email");
+                await writer.WriteLineAsync("FirstName,LastName,Address,City,State,ZipCode,PhoneNumber,Email");
                 foreach(var contact  in contacts.Values)
                 {
                     writer.WriteLine(
@@ -224,14 +226,15 @@ namespace AddressManagementSystem.Services
 
         }
 
-        public void ReadCsvFile()
+        public async Task ReadCsvFile()
         {
             if (!File.Exists(csvpathfile))
             {
                 Console.WriteLine("CSV file not found.");
                 return;
             }
-            string[]lines = File.ReadAllLines(csvpathfile);
+            string[]lines = await File.ReadAllLinesAsync(csvpathfile);
+
             for (int i = 1; i < lines.Length; i++) {
                 string[] data = lines[i].Split(',');
                 if (data.Length < 8)
@@ -254,7 +257,7 @@ namespace AddressManagementSystem.Services
             Console.WriteLine("Contacts loaded from AddressBook.csv successfully.");
         }
         string path = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\AddressManagementSystem\contact.json";
-        public void WriteContactsToJsonFile()
+        public async Task WriteContactsToJsonFile()
         {
             var contactList = contacts.Values.ToList();
 
@@ -263,12 +266,13 @@ namespace AddressManagementSystem.Services
                 new JsonSerializerOptions { WriteIndented = true }
             );
 
-            File.WriteAllText(path, jsonData);
+            await File.WriteAllTextAsync(path, jsonData);
+
 
             Console.WriteLine("Contacts saved to AddressBook.json successfully.");
         }
 
-        public void ReadContactsFromJsonFile()
+        public async Task ReadContactsFromJsonFile()
         {
             if (!File.Exists(path))
             {
@@ -276,7 +280,7 @@ namespace AddressManagementSystem.Services
                 return;
             }
 
-            string jsonData = File.ReadAllText(path);
+            string jsonData = await File.ReadAllTextAsync(path);
 
             List<Contact> contactList =
                 JsonSerializer.Deserialize<List<Contact>>(jsonData);

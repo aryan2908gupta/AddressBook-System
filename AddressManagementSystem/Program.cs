@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AddressManagementSystem.Services;
 
 namespace AddressManagementSystem
 {
     internal class Program
     {
-        static void Main()
+        static async Task Main()   // 🔑 MUST be async
         {
             AddressBookSystem system = new AddressBookSystem();
 
@@ -19,15 +20,16 @@ namespace AddressManagementSystem
                 Console.WriteLine("2. Edit Contact");
                 Console.WriteLine("3. Delete Contact");
                 Console.WriteLine("4. Search by City/State (UC8)");
-                Console.WriteLine("5. Count Contacts by City/State (UC10)");
-                Console.WriteLine("6. Sort Contacts by Name (UC11)");
-                Console.WriteLine("7. Sort Contacts by City/State/Zip (UC12)");
-                Console.WriteLine("8. Save Contacts to CSV (UC14)");
-                Console.WriteLine("9. Load Contacts from CSV (UC14)");
-                Console.WriteLine("10. Save Contacts to JSON (UC15)");
-                Console.WriteLine("11. Load Contacts from JSON (UC15)");
-                Console.WriteLine("12. Exit");
-
+                Console.WriteLine("5. Count Contacts by City/State ");
+                Console.WriteLine("6. Sort Contacts by Name ");
+                Console.WriteLine("7. Sort Contacts by City/State/Zip ");
+                Console.WriteLine("8. Save Contacts to TXT ");
+                Console.WriteLine("9. Load Contacts from TXT ");
+                Console.WriteLine("10. Save Contacts to CSV ");
+                Console.WriteLine("11. Load Contacts from CSV ");
+                Console.WriteLine("12. Save Contacts to JSON ");
+                Console.WriteLine("13. Load Contacts from JSON ");
+                Console.WriteLine("14. Exit");
 
                 Console.Write("Enter your choice: ");
 
@@ -94,23 +96,33 @@ namespace AddressManagementSystem
                         }
                         break;
 
+                   
                     case 8:
-                        book.WriteCsvFile(); // UC14 WRITE
+                        await book.WriteContactsToFile();
                         break;
 
                     case 9:
-                        book.ReadCsvFile(); // UC14 READ
+                        await book.ReadContactFromFile();
                         break;
 
+                    
                     case 10:
-                        book.WriteContactsToJsonFile(); // UC15 WRITE
+                        await book.WriteCsvFile();
                         break;
 
                     case 11:
-                        book.ReadContactsFromJsonFile(); // UC15 READ
+                        await book.ReadCsvFile();
                         break;
 
                     case 12:
+                        await book.WriteContactsToJsonFile();
+                        break;
+
+                    case 13:
+                        await book.ReadContactsFromJsonFile();
+                        break;
+
+                    case 14:
                         Console.WriteLine("Exiting application...");
                         return;
 
