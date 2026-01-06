@@ -22,9 +22,10 @@ namespace AddressManagementSystem
                 Console.WriteLine("5. Count Contacts by City/State (UC10)");
                 Console.WriteLine("6. Sort Contacts by Name (UC11)");
                 Console.WriteLine("7. Sort Contacts by City/State/Zip (UC12)");
-                Console.WriteLine("8. Save Contacts to File (UC13)");
-                Console.WriteLine("9. Load Contacts from File (UC13)");
+                Console.WriteLine("8. Save Contacts to CSV (UC14)");
+                Console.WriteLine("9. Load Contacts from CSV (UC14)");
                 Console.WriteLine("10. Exit");
+
                 Console.Write("Enter your choice: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int choice))
@@ -53,11 +54,11 @@ namespace AddressManagementSystem
                         break;
 
                     case 5:
-                        system.CountByCityOrState(); // UC10
+                        system.CountByCityOrState();
                         break;
 
                     case 6:
-                        system.SortContactsByName(); // UC11
+                        system.SortContactsByName();
                         break;
 
                     case 7:
@@ -78,15 +79,12 @@ namespace AddressManagementSystem
                             case 1:
                                 system.SortContactsByCity();
                                 break;
-
                             case 2:
                                 system.SortContactsByState();
                                 break;
-
                             case 3:
                                 system.SortContactsByZip();
                                 break;
-
                             default:
                                 Console.WriteLine("Invalid sorting option.");
                                 break;
@@ -94,17 +92,16 @@ namespace AddressManagementSystem
                         break;
 
                     case 8:
-                        book.WriteContactsToFile();
+                        book.WriteCsvFile(); // UC14 WRITE
                         break;
 
                     case 9:
-                        book.ReadContactFromFile();
+                        book.ReadCsvFile(); // UC14 READ
                         break;
 
                     case 10:
                         Console.WriteLine("Exiting application...");
                         return;
-
 
                     default:
                         Console.WriteLine("Invalid choice. Please select again.");

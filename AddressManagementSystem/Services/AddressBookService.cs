@@ -10,7 +10,7 @@ namespace AddressManagementSystem.Services
 
         private const string filepath = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\addressbook.txt";
 
-   private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
 
         //private readonly List<Contact> contacts = new List<Contact>();
         //UC6 and UC7 DONE IN SAME
@@ -20,7 +20,7 @@ namespace AddressManagementSystem.Services
             string choice;
             do
             {
-               
+
 
                 Console.Write("Enter First Name: ");
                 string firstName = Console.ReadLine();
@@ -28,15 +28,16 @@ namespace AddressManagementSystem.Services
                 Console.Write("Enter Last Name: ");
                 string lastName = Console.ReadLine();
 
-                string key = firstName + " " +lastName;
-                
+                string key = firstName + " " + lastName;
+
                 if (contacts.ContainsKey(key))
                 {
                     Console.WriteLine($"User Already exists with this {key} name ");
                 }
-                else {
+                else
+                {
                     Contact contact = new Contact();
-                    
+
                     contact.FirstName = firstName;
                     contact.LastName = lastName;
 
@@ -58,7 +59,7 @@ namespace AddressManagementSystem.Services
                     Console.Write("Enter Email: ");
                     contact.Email = Console.ReadLine();
 
-                    contacts.Add(key,contact);
+                    contacts.Add(key, contact);
 
                     Console.WriteLine();
                     Console.WriteLine("Contacts Added Successfully");
@@ -80,8 +81,9 @@ namespace AddressManagementSystem.Services
 
             string key = firstname + " " + lastName;
 
-            if (contacts.ContainsKey(key)) { 
-            
+            if (contacts.ContainsKey(key))
+            {
+
                 Contact contact = contacts[key];
                 Console.Write("Enter the new Phone Number : ");
                 contact.PhoneNumber = Console.ReadLine();
@@ -103,8 +105,9 @@ namespace AddressManagementSystem.Services
 
             string key = firstname + " " + lastName;
 
-            if (contacts.ContainsKey(key)) { 
-            
+            if (contacts.ContainsKey(key))
+            {
+
                 contacts.Remove(key);
             }
             else
@@ -179,7 +182,8 @@ namespace AddressManagementSystem.Services
 
             string[] lines = File.ReadAllLines(filepath);
 
-            foreach (string line in lines) {
+            foreach (string line in lines)
+            {
 
                 string[] data = line.Split('|');
 
@@ -201,7 +205,53 @@ namespace AddressManagementSystem.Services
             Console.WriteLine("Contacts loaded from AddressBook.txt successfully.");
         }
 
+        private const string csvpathfile = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\contact.csv";
+        public void WriteCsvFile()
+        {
+            using (StreamWriter writer = new StreamWriter(csvpathfile))
+            {
+                writer.WriteLine("FirstName,LastName,Address,City,State,ZipCode,PhoneNumber,Email");
+                foreach(var contact  in contacts.Values)
+                {
+                    writer.WriteLine(
+               $"{contact.FirstName},{contact.LastName},{contact.Address}," +
+               $"{contact.City},{contact.State},{contact.ZipCode}," +
+               $"{contact.PhoneNumber},{contact.Email}"
+           );
+                }
+            }
 
+        }
+
+        public void ReadCsvFile()
+        {
+            if (!File.Exists(csvpathfile))
+            {
+                Console.WriteLine("CSV file not found.");
+                return;
+            }
+            string[]lines = File.ReadAllLines(csvpathfile);
+            for (int i = 1; i < lines.Length; i++) {
+                string[] data = lines[i].Split(',');
+                if (data.Length < 8)
+                    continue;
+                Contact contact = new Contact
+                {
+                    FirstName = data[0],
+                    LastName = data[1],
+                    Address = data[2],
+                    City = data[3],
+                    State = data[4],
+                    ZipCode = data[5],
+                    PhoneNumber = data[6],
+                    Email = data[7]
+                };
+
+                string key = contact.FirstName + " " + contact.LastName;
+                contacts[key] = contact;
+            }
+            Console.WriteLine("Contacts loaded from AddressBook.csv successfully.");
+        }
     }
 }
 
