@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace AddressManagementSystem.Services
 {
@@ -252,6 +253,47 @@ namespace AddressManagementSystem.Services
             }
             Console.WriteLine("Contacts loaded from AddressBook.csv successfully.");
         }
+        string path = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\AddressManagementSystem\contact.json";
+        public void WriteContactsToJsonFile()
+        {
+            var contactList = contacts.Values.ToList();
+
+            string jsonData = JsonSerializer.Serialize(
+                contactList,
+                new JsonSerializerOptions { WriteIndented = true }
+            );
+
+            File.WriteAllText(path, jsonData);
+
+            Console.WriteLine("Contacts saved to AddressBook.json successfully.");
+        }
+
+        public void ReadContactsFromJsonFile()
+        {
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("JSON file not found.");
+                return;
+            }
+
+            string jsonData = File.ReadAllText(path);
+
+            List<Contact> contactList =
+                JsonSerializer.Deserialize<List<Contact>>(jsonData);
+
+            contacts.Clear();
+
+            foreach (Contact contact in contactList)
+            {
+                string key = contact.FirstName + " " + contact.LastName;
+                contacts[key] = contact;
+            }
+
+            Console.WriteLine("Contacts loaded from AddressBook.json successfully.");
+        }
+
+
+
     }
 }
 
