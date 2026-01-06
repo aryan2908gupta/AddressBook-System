@@ -22,7 +22,9 @@ namespace AddressManagementSystem
                 Console.WriteLine("5. Count Contacts by City/State (UC10)");
                 Console.WriteLine("6. Sort Contacts by Name (UC11)");
                 Console.WriteLine("7. Sort Contacts by City/State/Zip (UC12)");
-                Console.WriteLine("8. Exit");
+                Console.WriteLine("8. Save Contacts to File (UC13)");
+                Console.WriteLine("9. Load Contacts from File (UC13)");
+                Console.WriteLine("10. Exit");
                 Console.Write("Enter your choice: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int choice))
@@ -92,8 +94,17 @@ namespace AddressManagementSystem
                         break;
 
                     case 8:
+                        book.WriteContactsToFile();
+                        break;
+
+                    case 9:
+                        book.ReadContactFromFile();
+                        break;
+
+                    case 10:
                         Console.WriteLine("Exiting application...");
                         return;
+
 
                     default:
                         Console.WriteLine("Invalid choice. Please select again.");

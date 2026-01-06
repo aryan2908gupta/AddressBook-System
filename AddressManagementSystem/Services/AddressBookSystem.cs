@@ -185,7 +185,5 @@ namespace AddressManagementSystem.Services
             foreach (var c in contacts)
                 Console.WriteLine(c);
         }
-
-
-    }
+          }
     }

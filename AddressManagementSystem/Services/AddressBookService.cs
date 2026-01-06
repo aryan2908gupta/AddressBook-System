@@ -8,6 +8,8 @@ namespace AddressManagementSystem.Services
     public class AddressBookService : IAddressBookService
     {
 
+        private const string filepath = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\addressbook.txt";
+
    private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
 
         //private readonly List<Contact> contacts = new List<Contact>();
@@ -116,6 +118,88 @@ namespace AddressManagementSystem.Services
             return contacts.Values;
         }
 
+        // Testing Done ........
+        public void AddContact(Contact contact)
+        {
+            string key = contact.FirstName + " " + contact.LastName;
+
+            if (!contacts.ContainsKey(key))
+            {
+                contacts.Add(key, contact);
+            }
+        }
+
+        public bool DeleteContact(string firstName, string lastName)
+        {
+            string key = firstName + " " + lastName;
+
+            return contacts.Remove(key);
+        }
+
+        public bool EditContact(string firstName, string lastName, string newPhoneNumber)
+        {
+            bool isChanged = false;
+            string key = firstName + " " + lastName;
+
+            if (contacts.ContainsKey(key))
+            {
+                contacts[key].PhoneNumber = newPhoneNumber;
+                isChanged = true;
+                return isChanged;
+            }
+
+            return isChanged;
+        }
+
+        public void WriteContactsToFile()
+        {
+            using (StreamWriter writer = new StreamWriter(filepath))
+            {
+                foreach (var contact in contacts.Values)
+                {
+                    writer.WriteLine(
+                             $"{contact.FirstName}|{contact.LastName}|{contact.Address}|" +
+                $"{contact.City}|{contact.State}|{contact.ZipCode}|" +
+                $"{contact.PhoneNumber}|{contact.Email}"
+                        );
+                }
+            }
+            Console.WriteLine("Contacts saved to AddressBook.txt successfully.");
+
+        }
+
+        public void ReadContactFromFile()
+        {
+            if (!File.Exists(filepath))
+            {
+                Console.WriteLine("AddressBook.txt file not found.");
+                return;
+            }
+            contacts.Clear();
+
+            string[] lines = File.ReadAllLines(filepath);
+
+            foreach (string line in lines) {
+
+                string[] data = line.Split('|');
+
+                Contact contact = new Contact
+                {
+                    FirstName = data[0],
+                    LastName = data[1],
+                    Address = data[2],
+                    City = data[3],
+                    State = data[4],
+                    ZipCode = data[5],
+                    PhoneNumber = data[6],
+                    Email = data[7]
+                };
+
+                string key = contact.FirstName + " " + contact.LastName;
+                contacts[key] = contact;
+            }
+            Console.WriteLine("Contacts loaded from AddressBook.txt successfully.");
+        }
 
 
     }
