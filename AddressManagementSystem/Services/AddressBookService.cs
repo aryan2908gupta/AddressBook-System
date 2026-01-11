@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace AddressManagementSystem.Services
 {
@@ -10,6 +14,21 @@ namespace AddressManagementSystem.Services
     {
 
         private const string filepath = @"C:\Users\aryan\OneDrive\Desktop\AdressBookManagementSystem\AddressBook-System\AddressManagementSystem\contact.txt";
+
+
+        private readonly IAddressBookRepository repository;
+
+        // ✅ default constructor (so your old code still works UC17)
+        public AddressBookService()
+        {
+        }
+
+        // ✅ constructor injection (UC18)
+        public AddressBookService(IAddressBookRepository repo)
+        {
+            repository = repo;
+        }
+
 
         private readonly Dictionary<string, Contact> contacts = new Dictionary<string, Contact>(StringComparer.OrdinalIgnoreCase);
 
@@ -295,6 +314,21 @@ namespace AddressManagementSystem.Services
 
             Console.WriteLine("Contacts loaded from AddressBook.json successfully.");
         }
+
+        public async Task SaveToRepositoryAsync()
+        {
+            await repository.SaveAsync(contacts.Values.ToList());
+        }
+
+        public async Task LoadFromRepositoryAsync()
+        {
+            var list = await repository.LoadAsync();
+            contacts.Clear();
+
+            foreach (var c in list)
+                contacts[c.FirstName + " " + c.LastName] = c;
+        }
+
 
 
 

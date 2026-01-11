@@ -1,17 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using AddressManagementSystem.Entity;
 using AddressManagementSystem.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace AddressManagementSystem
 {
     internal class Program
     {
-        static async Task Main()   // 🔑 MUST be async
-        {
-            AddressBookSystem system = new AddressBookSystem();
 
-            system.CreateAddressBook("Friends");
-            AddressBookService book = system.GetBook("Friends");
+        static async Task Main()
+        {
+            // UC18: Choose DB repository (ADO.NET)
+            IAddressBookRepository repo = new DatabaseAddressBookRepository();
+            AddressBookService book = new AddressBookService(repo);
+
+            AddressBookSystem system = new AddressBookSystem();
 
             while (true)
             {
@@ -20,16 +23,18 @@ namespace AddressManagementSystem
                 Console.WriteLine("2. Edit Contact");
                 Console.WriteLine("3. Delete Contact");
                 Console.WriteLine("4. Search by City/State (UC8)");
-                Console.WriteLine("5. Count Contacts by City/State ");
-                Console.WriteLine("6. Sort Contacts by Name ");
-                Console.WriteLine("7. Sort Contacts by City/State/Zip ");
-                Console.WriteLine("8. Save Contacts to TXT ");
-                Console.WriteLine("9. Load Contacts from TXT ");
-                Console.WriteLine("10. Save Contacts to CSV ");
-                Console.WriteLine("11. Load Contacts from CSV ");
-                Console.WriteLine("12. Save Contacts to JSON ");
-                Console.WriteLine("13. Load Contacts from JSON ");
-                Console.WriteLine("14. Exit");
+                Console.WriteLine("5. Count Contacts by City/State");
+                Console.WriteLine("6. Sort Contacts by Name");
+                Console.WriteLine("7. Sort Contacts by City/State/Zip");
+                Console.WriteLine("8. Save Contacts to TXT (UC13)");
+                Console.WriteLine("9. Load Contacts from TXT (UC13)");
+                Console.WriteLine("10. Save Contacts to CSV (UC14)");
+                Console.WriteLine("11. Load Contacts from CSV (UC14)");
+                Console.WriteLine("12. Save Contacts to JSON (UC15)");
+                Console.WriteLine("13. Load Contacts from JSON (UC15)");
+                Console.WriteLine("14. Save Contacts to Database (UC18)");
+                Console.WriteLine("15. Load Contacts from Database (UC18)");
+                Console.WriteLine("16. Exit");
 
                 Console.Write("Enter your choice: ");
 
@@ -96,7 +101,6 @@ namespace AddressManagementSystem
                         }
                         break;
 
-                   
                     case 8:
                         await book.WriteContactsToFile();
                         break;
@@ -105,7 +109,6 @@ namespace AddressManagementSystem
                         await book.ReadContactFromFile();
                         break;
 
-                    
                     case 10:
                         await book.WriteCsvFile();
                         break;
@@ -123,6 +126,14 @@ namespace AddressManagementSystem
                         break;
 
                     case 14:
+                        await book.SaveToRepositoryAsync();
+                        break;
+
+                    case 15:
+                        await book.LoadFromRepositoryAsync();
+                        break;
+
+                    case 16:
                         Console.WriteLine("Exiting application...");
                         return;
 
